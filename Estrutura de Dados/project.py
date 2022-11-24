@@ -20,7 +20,20 @@ class linkedList:
     def insertGrades(self):
         aux = self.head
         while aux  != None:
-            aux.data[1] = int(input("Digite a nota: "))
+            if (aux.data[1] == 0):
+                aux.data[1] = int(input("Digite a 1º nota: "))
+            if (aux.data[2] == 0):
+                aux.data[2] = int(input("Digite a 2º nota: "))
+            aux = aux.next
+        print("Notas inseridas!")
+
+    def modifyGrades(self):
+        aux = self.head
+        while aux  != None:
+            if (aux.data[1] != 0):
+                aux.data[1] = int(input("Digite a 1º nota: "))
+            if (aux.data[2] != 0):
+                aux.data[2] = int(input("Digite a 2º nota: "))
             aux = aux.next
         print("Notas inseridas!")
 
@@ -33,6 +46,15 @@ class linkedList:
             print(aux.data[0], ": ", aux.data[1],sep="")
             aux = aux.next
 
+    def remove(self, element):
+        aux = self.head
+        while aux != None:
+            if(self.head[0] == element):
+                if (counter != 0):
+                    print("Hello World")
+                else:
+                    self.head = self.head.next
+                
 flag = True
 option = 0
 list = linkedList()
@@ -46,7 +68,11 @@ while (flag):
     print()
     if option == 1:
         list.insertGrades()
+    if option == 2:
+        list.modifyGrades()
+    if option == 3:
+        list.selfPrint()
     if option == 4:
-        option = input("Qual cadeira/matéria vc deseja adicionar à grade?: ")
-        list.insert([option, 0])
-    flag = False    
+        list.insert([input("Qual cadeira/matéria quer adicionar a grade?: "), 0, 0])
+    if option == 6:
+        flag == False
