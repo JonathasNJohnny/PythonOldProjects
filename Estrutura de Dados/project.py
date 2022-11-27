@@ -18,26 +18,38 @@ class linkedList:
         self.head = new_node
 
     def insertGrades(self):
+        flag = False
         aux = self.head
-        while aux  != None:
+        while aux != None:
             print("\n", aux.data[0])
             if (aux.data[1] == None or aux.data[1] == 0):
                 aux.data[1] = int(input("Digite a 1º nota: "))
+                flag = True
             if (aux.data[2] == None or aux.data[2] == 0):
                 aux.data[2] = int(input("Digite a 2º nota: "))
+                flag = True
             aux = aux.next
-        print("Notas inseridas!")
+        if (flag):
+            print("Notas inseridas!")
+        else:
+            print("Não há cadeiras que precisam adicionar notas!")
 
     def modifyGrades(self):
+        flag = False
         aux = self.head
         while aux  != None:
             print("\n", aux.data[0])
             if (aux.data[1] != None):
                 aux.data[1] = int(input("Digite a 1º nota: "))
+                flag = True
             if (aux.data[2] != None):
                 aux.data[2] = int(input("Digite a 2º nota: "))
+                flag = True
             aux = aux.next
-        print("Notas inseridas!")
+        if (flag):
+            print("Notas modificadas!")
+        else:
+            print("Não há cadeiras que precisam modificar notas!")
 
     def selfPrint(self):
         print()
@@ -51,7 +63,6 @@ class linkedList:
     def remove(self, data):
         aux = self.head
         if(aux.next != None):
-            # if head node is to be deleted
             if(aux.data[0] == data):
                 aux.next.back = None
                 self.head = aux.next
@@ -63,13 +74,11 @@ class linkedList:
                         break
                     aux = aux.next
                 if(aux.next):
-                    # if element to be deleted is in between
                     aux.back.next = aux.next
                     aux.next.back = aux.back
                     aux.next = None
                     aux.back = None
                 else:
-                    # if element to be deleted is the last element
                     aux.back.next = None
                     aux.back = None
                 return
@@ -93,13 +102,13 @@ while (flag):
     print()
     if option == 1:
         list.insertGrades()
-    if option == 2:
+    elif option == 2:
         list.modifyGrades()
-    if option == 3:
+    elif option == 3:
         list.selfPrint()
-    if option == 4:
+    elif option == 4:
         list.insert([input("Qual cadeira/matéria quer adicionar a grade?: ").upper(), None, None])
-    if option == 5:
+    elif option == 5:
         list.remove(input("Digite a cadeira/matéria que quer remover: ").upper)
-    if option == 0:
+    elif option == 0:
         flag = False
