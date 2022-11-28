@@ -109,6 +109,6 @@ while (flag):
     elif option == 4:
         list.insert([input("Qual cadeira/matéria quer adicionar a grade?: ").upper(), None, None])
     elif option == 5:
-        list.remove(input("Digite a cadeira/matéria que quer remover: ").upper)
+        list.remove(input("Digite a cadeira/matéria que quer remover: ").upper()
     elif option == 0:
         flag = False
