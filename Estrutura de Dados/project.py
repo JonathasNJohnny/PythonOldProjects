@@ -1,3 +1,4 @@
+import gc
 class Node:
     def __init__(self, data):
         self.back = None
@@ -57,38 +58,34 @@ class linkedList:
         counter = 0
         while aux != None:
             counter += 1
-            print(aux.data[0], ": ", aux.data[1], ", ", aux.data[2],sep="")
+            print(counter, " - ",aux.data[0], ": ", aux.data[1], ", ", aux.data[2],sep="")
             aux = aux.next
 
-    def remove(self, data):
+    def selfPrintNoGrades(self):
+        print()
         aux = self.head
-        if(aux.next != None):
-            if(aux.data[0] == data):
-                aux.next.back = None
-                self.head = aux.next
-                aux.next = None
-                return
-            else:
-                while(aux.next != None):
-                    if(aux.data[0] == data):
-                        break
-                    aux = aux.next
-                if(aux.next):
-                    aux.back.next = aux.next
-                    aux.next.back = aux.back
-                    aux.next = None
-                    aux.back = None
-                else:
-                    aux.back.next = None
-                    aux.back = None
-                return
+        counter = 0
+        while aux != None:
+            counter += 1
+            print(counter, " ----- ",aux.data[0])
+            aux = aux.next
 
-        if (aux == None):
+    def remove(self, position):
+        if self.head is None:
             return
+        index = 0
+        current = self.head
+        while current.next and index < position:
+            previous = current
+            current = current.next
+            index += 1
+        if index < position:
+            print("\nNúmero digitado inválido.")
+        elif index == 0:
+            self.head = self.head.next
+        else:
+            previous.next = current.next
 
-        if (aux == None):
-            return
-                
 flag = True
 option = 0
 list = linkedList()
@@ -97,18 +94,20 @@ while (flag):
     #SCNADU = Sistema de Cadastramento de Notas de Alunos em Disciplinas de uma Universidade
     print("Seja bem vindo ao sistema SCNADU")
     print("\nO que deseja fazer?\n")
-    print("1 - Adicionar Notas\n2 - Modificar Notas\n3 - Imprimir Dados\n4 - Adicionar Cadeiras/Matérias\n5 - Remover Cadeiras/Matérias\n0 - Fechar sistema")
+    print("1 - Adicionar Cadeiras/Matérias\n2 - Adicionar Notas\n3 - Imprimir Dados\n4 - Modificar Notas\n5 - Remover Cadeiras/Matérias\n0 - Fechar sistema")
     option = int(input("Digite sua opção: "))
     print()
     if option == 1:
-        list.insertGrades()
+        list.insert([input("Qual cadeira/matéria quer adicionar a grade?: ").upper(), None, None])
     elif option == 2:
-        list.modifyGrades()
+        list.insertGrades()
     elif option == 3:
         list.selfPrint()
     elif option == 4:
-        list.insert([input("Qual cadeira/matéria quer adicionar a grade?: ").upper(), None, None])
+        list.modifyGrades()
     elif option == 5:
-        list.remove(input("Digite a cadeira/matéria que quer remover: ").upper)
+        list.selfPrintNoGrades()
+        list.remove(int(input("Digite a cadeira/matéria que quer remover: "))-1)
     elif option == 0:
+        print(len(list))
         flag = False
