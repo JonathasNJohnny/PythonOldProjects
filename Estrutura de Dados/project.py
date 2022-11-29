@@ -31,7 +31,7 @@ class linkedList:
                     print("1 - Para sim\n2 - Para não\nDeseja atribuir ",data[0]," ao aluno ", aux.data[0],"?: ", sep="", end="")
                     op = int(input())
                 if (op == 1):
-                    aux.data[1].append(data)
+                    aux.data[1].append(data.copy())
             aux = aux.next
             flag = False
             op = 0
@@ -55,9 +55,49 @@ class linkedList:
                         aux.data[1][i][3] = (aux.data[1][i][1] + aux.data[1][i][2]) / 2
             aux = aux.next
 
-    def removeStudent(self, data):
-        print("Hello World")
+    def selfPrint(self, data):
+        print()
+        aux = self.head
+        counter = 0
+        while aux != None:
+            counter += 1
+            if (data == 22):
+                print(counter, " - ",aux.data,sep="")
+            else:
+                print(counter, " - ",aux.data[data],sep="")
+            aux = aux.next
 
+    def removeStudent(self):
+        self.selfPrint(0)
+        position = int(input("Digite o número do aluno que deseja remover: ")) - 1
+        if self.head is None:
+            return
+        index = 0
+        current = self.head
+        while current.next and index < position:
+            previous = current
+            current = current.next
+            index += 1
+        if index < position:
+            print("\nNúmero digitado inválido.")
+        elif index == 0:
+            self.head = self.head.next
+        else:
+            previous.next = current.next
+
+    def removeSubject(self):
+        aux = self.head
+        self.selfPrint(0)
+        position = int(input("Digite o número do aluno que deseja remover a cadeira/matéria: ")) - 1
+        for i in range(position):
+            aux = aux.next
+        for i in range(len(aux.data[1])):
+            print(i+1, "-", aux.data[1][i][0])
+        self.selfPrint(1)
+        position = int(input("Digite o número da cadeira/matéria que deseja remover: ")) - 1
+        aux.data[1].pop(position)
+
+    
     def modifyGrades(self):
         flag = False
         aux = self.head
@@ -75,31 +115,6 @@ class linkedList:
         else:
             print("Não há cadeiras que precisam modificar notas!")
 
-    def selfPrint(self):
-        print()
-        aux = self.head
-        counter = 0
-        while aux != None:
-            counter += 1
-            print(counter, " - ",aux.data,sep="")
-            aux = aux.next
-
-    def remove(self, position):
-        if self.head is None:
-            return
-        index = 0
-        current = self.head
-        while current.next and index < position:
-            previous = current
-            current = current.next
-            index += 1
-        if index < position:
-            print("\nNúmero digitado inválido.")
-        elif index == 0:
-            self.head = self.head.next
-        else:
-            previous.next = current.next
-
 flag = True
 option = 0
 list = linkedList()
@@ -108,7 +123,7 @@ while (flag):
     #SCNADU = Sistema de Cadastramento de Notas de Alunos em Disciplinas de uma Universidade
     print("Seja bem vindo ao sistema SCNADU")
     print("\nO que deseja fazer?\n")
-    print("1 - Adicionar Aluno\n2 - Adiconar Cadeira/Matéria ao Aluno\n3 - Adicionar Notas\n4 - Imprimir Dados\n")
+    print("1 - Adicionar Aluno\n2 - Adiconar Cadeira/Matéria ao Aluno\n3 - Adicionar Notas\n4 - Remover Aluno\n5 - Remover Cadeira/Matéria de Aluno\n")
     option = int(input("Digite sua opção: "))
     print()
     if option == 1:
@@ -117,13 +132,15 @@ while (flag):
         list.insertSubject([input("Digite o nome da cadeira/matéria que deseja atribuir ao aluno: ").upper(), None, None, None])
     elif option == 3:
         list.insertGrades()
+    elif option == 4:
+        list.removeStudent()
     elif option == 5:
-        list.modifyGrades()
+        list.removeSubject()
     elif option == 6:
         list.selfPrintNoGrades()
         list.remove(int(input("Digite a cadeira/matéria que quer remover: "))-1)
     elif option == 14:
-        list.selfPrint()
+        list.selfPrint(22)
     elif option == 0:
         print(len(list))
         flag = False
