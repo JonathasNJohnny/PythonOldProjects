@@ -18,22 +18,45 @@ class linkedList:
             self.head.back = new_node
         self.head = new_node
 
-    def insertGrades(self):
+    def insertSubject(self, data):
+        op = 0
         flag = False
         aux = self.head
         while aux != None:
-            print("\n", aux.data[0])
-            if (aux.data[1] == None or aux.data[1] == 0):
-                aux.data[1] = int(input("Digite a 1º nota: "))
-                flag = True
-            if (aux.data[2] == None or aux.data[2] == 0):
-                aux.data[2] = int(input("Digite a 2º nota: "))
-                flag = True
+            for i in range(len(aux.data[1])):
+                if (aux.data[1][i] == data):
+                    flag = True
+            if (flag != True):
+                while (op < 1 or op > 2):
+                    print("1 - Para sim\n2 - Para não\nDeseja atribuir ",data[0]," ao aluno ", aux.data[0],"?: ", sep="", end="")
+                    op = int(input())
+                if (op == 1):
+                    aux.data[1].append(data)
             aux = aux.next
-        if (flag):
-            print("Notas inseridas!")
-        else:
-            print("Não há cadeiras que precisam adicionar notas!")
+            flag = False
+            op = 0
+
+    def insertGrades(self):
+        op = 0
+        aux = self.head
+        while aux != None:
+            if(len(aux.data[1]) != 0):
+                for i in range(len(aux.data[1])):
+                    for j in range(2):
+                        if(aux.data[1][i][j+1] == None):
+                            while (op < 1 or op > 2):
+                                print("1 - Para sim\n2 - Para não\nDeseja adicionar a ", j+1 ,"º nota do aluno ", aux.data[0]," em ", aux.data[1][i][0],"?: ", sep="")
+                                op = int(input())
+                            if (op == 1):
+                                print("Digite a ", j+1,"º nota: ")
+                                aux.data[1][i][j+1] = int(input())
+                            op = 0
+                    if(aux.data[1][i][1] != None and aux.data[1][i][2] != None):
+                        aux.data[1][i][3] = (aux.data[1][i][1] + aux.data[1][i][2]) / 2
+            aux = aux.next
+
+    def removeStudent(self, data):
+        print("Hello World")
 
     def modifyGrades(self):
         flag = False
@@ -58,16 +81,7 @@ class linkedList:
         counter = 0
         while aux != None:
             counter += 1
-            print(counter, " - ",aux.data[0], ": ", aux.data[1], ", ", aux.data[2],sep="")
-            aux = aux.next
-
-    def selfPrintNoGrades(self):
-        print()
-        aux = self.head
-        counter = 0
-        while aux != None:
-            counter += 1
-            print(counter, " ----- ",aux.data[0])
+            print(counter, " - ",aux.data,sep="")
             aux = aux.next
 
     def remove(self, position):
@@ -94,20 +108,22 @@ while (flag):
     #SCNADU = Sistema de Cadastramento de Notas de Alunos em Disciplinas de uma Universidade
     print("Seja bem vindo ao sistema SCNADU")
     print("\nO que deseja fazer?\n")
-    print("1 - Adicionar Cadeiras/Matérias\n2 - Adicionar Notas\n3 - Imprimir Dados\n4 - Modificar Notas\n5 - Remover Cadeiras/Matérias\n0 - Fechar sistema")
+    print("1 - Adicionar Aluno\n2 - Adiconar Cadeira/Matéria ao Aluno\n3 - Adicionar Notas\n4 - Imprimir Dados\n")
     option = int(input("Digite sua opção: "))
     print()
     if option == 1:
-        list.insert([input("Qual cadeira/matéria quer adicionar a grade?: ").upper(), None, None])
+        list.insert([input("Digie o nome do aluno: ").upper(), []])
     elif option == 2:
-        list.insertGrades()
+        list.insertSubject([input("Digite o nome da cadeira/matéria que deseja atribuir ao aluno: ").upper(), None, None, None])
     elif option == 3:
-        list.selfPrint()
-    elif option == 4:
-        list.modifyGrades()
+        list.insertGrades()
     elif option == 5:
+        list.modifyGrades()
+    elif option == 6:
         list.selfPrintNoGrades()
         list.remove(int(input("Digite a cadeira/matéria que quer remover: "))-1)
+    elif option == 14:
+        list.selfPrint()
     elif option == 0:
         print(len(list))
         flag = False
