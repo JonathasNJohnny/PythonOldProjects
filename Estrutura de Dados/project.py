@@ -1,59 +1,57 @@
 import gc
-class Node:
-    def __init__(self, data):
+
+nan = float('NaN')
+mult = 80
+
+class Disciplina:
+    def __init__(self, nome):
         self.back = None
-        self.data = data
+        self.nome = nome
+        self.notas = dict()
         self.next = None
 
-class linkedList:
+    def add_estudante(self, estudante):
+        self.notas[estudante.nome] = [0, 0]
+        estudante.disciplinas.append(self)
+
+class Estudante:
+    def __init__(self, nome):
+        self.nome = nome
+        self.disciplinas = list()
+
+    def add_disciplina(self, disciplina):
+        self.disciplinas.append(disciplina)
+
+    def remove_disciplina(self, disciplina):
+        pass
     
+
+class DisciplinaList:
     def __init__(self):
         self.head = None
 
-    def insert(self, element):
-        new_node = Node(data = element)
+    def insert(self, nome):
+        new_node = Disciplina(nome)
+        
         new_node.next = self.head
         new_node.back = None
         if self.head is not None:
             self.head.back = new_node
         self.head = new_node
 
-    def insertSubject(self, data):
-        op = 0
-        flag = False
+    def insertStudent(self, disciplina, estudante):
         aux = self.head
-        while aux != None:
-            for i in range(len(aux.data[1])):
-                if (aux.data[1][i] == data):
-                    flag = True
-            if (flag != True):
-                while (op < 1 or op > 2):
-                    print("1 - Para sim\n2 - Para não\nDeseja atribuir ",data[0]," ao aluno ", aux.data[0],"?: ", sep="", end="")
-                    op = int(input())
-                if (op == 1):
-                    aux.data[1].append(data.copy())
+        while (aux.nome != disciplina and aux != None):
             aux = aux.next
-            flag = False
-            op = 0
+
+        if (aux == None):
+            return -1
+        aux.notas[estudante.nome] = [0, 0]
+        estudante.disciplinas.append(disciplina)
+        
 
     def insertGrades(self):
-        op = 0
-        aux = self.head
-        while aux != None:
-            if(len(aux.data[1]) != 0):
-                for i in range(len(aux.data[1])):
-                    for j in range(2):
-                        if(aux.data[1][i][j+1] == None):
-                            while (op < 1 or op > 2):
-                                print("1 - Para sim\n2 - Para não\nDeseja adicionar a ", j+1 ,"º nota do aluno ", aux.data[0]," em ", aux.data[1][i][0],"?: ", sep="")
-                                op = int(input())
-                            if (op == 1):
-                                print("Digite a ", j+1,"º nota: ")
-                                aux.data[1][i][j+1] = int(input())
-                            op = 0
-                    if(aux.data[1][i][1] != None and aux.data[1][i][2] != None):
-                        aux.data[1][i][3] = (aux.data[1][i][1] + aux.data[1][i][2]) / 2
-            aux = aux.next
+        pass
 
     def selfPrint(self, data):
         print()
@@ -115,32 +113,181 @@ class linkedList:
         else:
             print("Não há cadeiras que precisam modificar notas!")
 
-flag = True
+    def listaDisciplinas(self):
+        aux = self.head
+        if (aux == None): return None
+        l = []
+        while (aux != None):
+            l.append(aux)
+            aux = aux.next
+        return l
+
+def escolhe_disciplina():
+    global materias
+    l = materias.listaDisciplinas()
+    if (len(l) == 0):
+        print('Não há matérias cadastradas.')
+        return None
+    
+    for i, d in enumerate(l):
+        print(f'[{i}] - {d.nome}')
+    print('-'*mult)
+    while (True):
+        try:
+            c = int(input('Escolha: '))
+        except:
+            return None
+
+        if (0 <= c < len(l)):
+            break
+        
+    return l[c]
+
 option = 0
-list = linkedList()
-while (flag):
-    print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=")
-    #SCNADU = Sistema de Cadastramento de Notas de Alunos em Disciplinas de uma Universidade
-    print("Seja bem vindo ao sistema SCNADU")
-    print("\nO que deseja fazer?\n")
-    print("1 - Adicionar Aluno\n2 - Adiconar Cadeira/Matéria ao Aluno\n3 - Adicionar Notas\n4 - Remover Aluno\n5 - Remover Cadeira/Matéria de Aluno\n")
-    option = int(input("Digite sua opção: "))
-    print()
-    if option == 1:
-        list.insert([input("Digie o nome do aluno: ").upper(), []])
-    elif option == 2:
-        list.insertSubject([input("Digite o nome da cadeira/matéria que deseja atribuir ao aluno: ").upper(), None, None, None])
-    elif option == 3:
-        list.insertGrades()
-    elif option == 4:
-        list.removeStudent()
-    elif option == 5:
-        list.removeSubject()
-    elif option == 6:
-        list.selfPrintNoGrades()
-        list.remove(int(input("Digite a cadeira/matéria que quer remover: "))-1)
-    elif option == 14:
-        list.selfPrint(22)
-    elif option == 0:
-        print(len(list))
-        flag = False
+materias = DisciplinaList()
+estudantes = list()
+
+print('-'*mult)
+#SCNADU = Sistema de Cadastramento de Notas de Alunos em Disciplinas de uma Universidade
+print("Seja bem vindo ao sistema SCNADU")
+print('-'*mult)
+print("{:^50}".format("O que deseja fazer?"))
+
+while (True):
+    print('-'*mult)
+    print("[1] Adicionar disciplina\n[2] Visualizar disciplina\n[3] Cadastrar estudantes\n[4] Cadastrar estudantes em disciplina\n[5] Editar/Adicionar notas de aluno\n[6] Remover aluno\n[7] Remover disciplina de aluno\n[8] Notas individuais de aluno\n[9] Estatísticas\n[10] Visualizar estudantes")
+    print('-'*mult)
+    while (True):
+        try:
+            option = int(input("Opção: "))
+        except:
+            continue
+
+        if (1 <= option <= 10):
+            break
+    print('-'*mult)
+    
+    if (option == 1):
+        nome = input('Insira o nome da disciplina: ')
+        materias.insert(nome)
+    elif (option == 2):
+        d = escolhe_disciplina()
+        if (d == None): continue
+        print('-'*mult)
+
+        print('{:^30}{:^10}{:^10}{:^10}'.format('Nome', 'Nota 1', 'Nota 2', 'Média'))
+        print('-'*mult)
+        for e in d.notas.keys():
+            print('{:^30}{:^10.2f}{:^10.2f}{:^10}'.format(e, d.notas[e][0], d.notas[e][1], (d.notas[e][0] + d.notas[e][1])/2))
+    elif (option == 3):
+        while (True):
+            nome = input('Nome do estudante [enter para parar]: ')
+            if (nome == ''): break
+            estudantes.append(Estudante(nome))
+    elif (option == 4):
+        d = escolhe_disciplina()
+        if (d == None):
+            continue
+            
+        print('-'*mult)
+        for e in estudantes:
+            if (d not in e.disciplinas):
+                c = input(f'Adicionar {e.nome} em {d.nome}? [s/n] ')
+                if (c == 's'):
+                    d.add_estudante(e)
+    elif (option == 5):
+        for e in estudantes:
+            opc = input(f'Editar notas do aluno {e.nome}? [s/n] ')
+            if (opc == 's'):
+                print('-'*mult)
+                for d in e.disciplinas:
+                    opc = input(f'Editar notas em {d.nome}? [s/n] ')
+                    if (opc == 's'):
+                        for i in range(2):
+                            try:
+                                n = int(input(f'{i+1}ª nota: [enter para pular] '))
+                                d.notas[e.nome][i] = n
+                            except:
+                                continue
+                        print('-'*mult)
+                        
+    elif (option == 6):
+        for i, e in enumerate(estudantes):
+            print(f'{i} - {e.nome}')
+        while (True):
+            i = input('Aluno para remover [x para cancelar]: ')
+            if (i == 'x'):
+                break
+            try:
+                opc = int(i)
+            except:
+                continue
+
+            if (0 <= opc < len(estudantes)):
+                break
+        if (i == 'x'): continue
+
+        for d in estudantes[opc].disciplinas:
+            d.notas.pop(estudantes[opc].nome)
+        estudantes.pop(opc)
+    elif (option == 7):
+        for i, e in enumerate(estudantes):
+            print(f'{i} - {e.nome}')
+        while (True):
+            i = input('Aluno para remover [x para cancelar]: ')
+            if (i == 'x'):
+                break
+            try:
+                opc = int(i)
+            except:
+                continue
+
+            if (0 <= opc < len(estudantes)):
+                break
+        if (i == 'x'): continue
+
+        for j, d in enumerate(estudantes[opc].disciplinas):
+            o = input(f'Remover o estudante de {d.nome}? [s/n] ')
+            if (opc == 's'):
+                d.notas.pop(estudantes[opc].nome)
+                estudantes[opc].disciplinas.pop(j)
+    elif (option == 8):
+        for e in estudantes:
+            opc = input(f'Ver notas do aluno {e.nome}? [s/n] ')
+            if (opc == 's'):
+                print('-'*mult)
+                for d in e.disciplinas:
+                    print(f'{d.nome}: Nota1={d.notas[e.nome][0]} Nota2={d.notas[e.nome][1]} Média={(d.notas[e.nome][0] + d.notas[e.nome][1])/2}')
+                print('-'*mult)
+    elif (option == 9):
+        d = escolhe_disciplina()
+        if (d == None):
+            continue
+        print('-'*mult)
+        print('Ver alunos com média\n[1] maior ou igual a 7.\n[2] menor que 7.')
+        print('-'*mult)
+        while (True):
+            try:
+                opc = int(input('Escolha: '))
+
+            except:
+                continue
+
+            if (0 < opc <= 2): break
+
+        print('-'*mult)
+        if (opc == 1):
+            for k in d.notas.keys():
+                media = (d.notas[k][0] + d.notas[k][1]) / 2
+                if (media >= 7):
+                    print(k)
+        else:
+            for k in d.notas.keys():
+                media = (d.notas[k][0] + d.notas[k][1]) / 2
+                if (media < 7):
+                    print(k)
+        print('-'*mult)
+        
+    elif (option == 10):
+        for e in estudantes:
+            print(e.nome)
