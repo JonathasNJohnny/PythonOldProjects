@@ -1,7 +1,5 @@
-def printAll(list):
-    print()
-    for i in range(len(list)):
-            print(list[i], end=" ")
+import random
+import time
 
 def amongusPrint():
     print("⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⠿⠿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿")
@@ -18,9 +16,12 @@ def amongusPrint():
     print("⣿⣿⣿⣶⣶⣶⠄⠄⢸⣿⣿⣿⣿⡏⠄⠄⢠⠄⠄⢰⣾⣿⣿⡏⠄⠄⣼⣿⣿⣿")
     print("⣿⣿⣿⣿⣿⣿⠄⠄⢸⣿⣿⣿⣿⡇⠄⠄⣿⣆⠄⠘⠿⠿⠿⠇⠄⣠⣿⣿⣿⣿")
     print("⣿⣿⣿⣿⣿⣿⣆⠄⠄⠈⠉⠉⠁⠄⢀⣸⣿⣿⣶⣤⣤⣤⣠⣤⣶⣿⣿⣿⣿⣿")
+    
+def printAll(list):
+    print()
+    for i in range(len(list)):
+            print(list[i], end=" ")
 
-import random
-import time
 amongusPrint()
 print("=-=-=-=-Bem Vindo a nave-=-=-=")
 initialCrew = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
