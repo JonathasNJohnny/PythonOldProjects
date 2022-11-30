@@ -155,7 +155,7 @@ print("{:^50}".format("O que deseja fazer?"))
 
 while (True):
     print('-'*mult)
-    print("[1] Adicionar disciplina\n[2] Visualizar disciplina\n[3] Cadastrar estudantes\n[4] Cadastrar estudantes em disciplina\n[5] Editar/Adicionar notas de aluno\n[6] Remover aluno\n[7] Remover disciplina de aluno\n[8] Notas individuais de aluno\n[9] Estatísticas\n[10] Visualizar estudantes")
+    print("[1] Adicionar disciplina\n[2] Visualizar disciplina\n[3] Cadastrar estudantes\n[4] Cadastrar estudantes em disciplina\n[5] Editar/Adicionar notas de aluno\n[6] Remover aluno\n[7] Remover disciplina de aluno\n[8] Notas individuais de aluno\n[9] Estatísticas\n[10] Sair")
     print('-'*mult)
     while (True):
         try:
@@ -289,5 +289,4 @@ while (True):
         print('-'*mult)
         
     elif (option == 10):
-        for e in estudantes:
-            print(e.nome)
+        break
