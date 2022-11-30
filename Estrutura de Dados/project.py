@@ -248,7 +248,7 @@ while (True):
 
         for j, d in enumerate(estudantes[opc].disciplinas):
             o = input(f'Remover o estudante de {d.nome}? [s/n] ')
-            if (opc == 's'):
+            if (o == 's'):
                 d.notas.pop(estudantes[opc].nome)
                 estudantes[opc].disciplinas.pop(j)
     elif (option == 8):
